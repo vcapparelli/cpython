@@ -266,15 +266,19 @@ class Formatter:
 
     def convert_field(self, value, conversion):
         # do any conversion on the resulting object
-        if conversion is None:
-            return value
-        elif conversion == 's':
-            return str(value)
-        elif conversion == 'r':
-            return repr(value)
-        elif conversion == 'a':
-            return ascii(value)
-        raise ValueError("Unknown conversion specifier {0!s}".format(conversion))
+        convert_function = {
+                None: lambda x: x,
+                'a': ascii,
+                'r': repr,
+                's': str,
+        }
+
+        try:
+            return convert_function[conversion](value)
+        except KeyError:
+            raise ValueError(
+                "Unknown conversion specifier {0!s}".format(conversion)
+            )
 
 
     # returns an iterable that contains tuples of the form:
