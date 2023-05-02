@@ -265,7 +265,26 @@ class Formatter:
 
 
     def convert_field(self, value, conversion):
-        # do any conversion on the resulting object
+        """Do any conversion on the resulting object.
+
+        :param object value:
+            The object to convert.
+
+        :param conversion:
+            The type of conversion:
+
+            * None: Don't use any conversion.
+            * 'a': Use ascii conversion.
+            * 'r': Use repr conversion.
+            * 's': Use str conversion.
+        :type conversion: str | None
+
+        :raises ValueError:
+            If *conversion* is not None, 'a', 'r' and 's'.
+
+        :rtype: object
+        """
+
         convert_function = {
                 None: lambda x: x,
                 'a': ascii,
